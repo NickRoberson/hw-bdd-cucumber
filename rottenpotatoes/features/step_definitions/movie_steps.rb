@@ -1,5 +1,7 @@
 # Add a declarative step here for populating the DB with movies.
 
+# PART 1 
+
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
@@ -12,14 +14,7 @@ Then /(.*) seed movies should exist/ do | n_seeds |
   Movie.count.should be n_seeds.to_i
 end
 
-# Make sure that one string (regexp) occurs before or after another one
-#   on the same page
-
-Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  assert page.body =~ /#{e1}.+#{e2}/m
- end
+# PART 2 
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, ratings|
   if uncheck == "un"
@@ -41,3 +36,6 @@ Then /I should see all the movies/ do
   rowCount = page.all('#movies tr').size - 1
   assert rowCount == Movie.count()
 end
+
+# PART 3 
+
