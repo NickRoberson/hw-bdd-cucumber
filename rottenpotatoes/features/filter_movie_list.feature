@@ -43,5 +43,4 @@ Scenario: all ratings selected
   When I check the following ratings: PG, R, PG-13, NC-17, G
   And I press "ratings_submit"
   Then I should be on the home page
-  And I should see all the movies
-
+  Then I should see all of the movies
