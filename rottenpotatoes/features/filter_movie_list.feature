@@ -23,25 +23,25 @@ Background: movies have been added to database
   Then 10 seed movies should exist
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
-  # enter step(s) to check the 'PG' and 'R' checkboxes
-  Given that there are movies in the database
-  When I check the rating boxes 'PG' and 'R'
-  # enter step(s) to uncheck all other checkboxes
-  And uncheck all other ratings
-  # enter step to "submit" the search form on the homepage
-  And press the submit button
-  # enter step(s) to ensure that PG and R movies are visible
-  Then the page should reload and show only 'PG' and 'R' movies
-  And I should not see any movies of any other rating 
-  # enter step(s) to ensure that other movies are not visible
+  When I check the following ratings: PG, R
+  When I uncheck the following ratings: PG-13, NC-17, G
+  And I press "ratings_submit"
+  Then I should be on the home page
+  # reused from web_steps.rb
+  And I should see "Amelie"
+  And I should see "Raiders of the Lost Ark"
+  And I should see "The Incredibles"
+  And I should see "The Terminator"
+  And I should see "When Harry Met Sally"
+  And I should not see "The Help"
+  And I should not see "Chocolat"
+  And I should not see "Aladdin"
+  And I should not see "2001: A Space Odyssey"
+  And I should not see "Chicken Run"
 
 Scenario: all ratings selected
-  Given that there are movies in the database
-  When I check the rating boxes 'PG' and 'R'
-  # enter step(s) to uncheck all other checkboxes
-  And uncheck all other ratings
-  # enter step to "submit" the search form on the homepage
-  And press the submit button
-  # enter step(s) to ensure that PG and R movies are visible
-  Then the page should reload and show only 'PG' and 'R' movies
-  And I should not see any movies of any other rating 
+  When I check the following ratings: PG, R, PG-13, NC-17, G
+  And I press "ratings_submit"
+  Then I should be on the home page
+  And I should see all the movies
+
