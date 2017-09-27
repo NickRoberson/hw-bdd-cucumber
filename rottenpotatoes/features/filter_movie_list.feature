@@ -23,6 +23,7 @@ Background: movies have been added to database
   Then 10 seed movies should exist
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
+  # setup 
   When I check the following ratings: PG, R
   When I uncheck the following ratings: PG-13, NC-17, G
   And I press "ratings_submit"
@@ -40,6 +41,7 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
   And I should not see "Chicken Run"
 
 Scenario: all ratings selected
+  # setup 
   When I check the following ratings: PG, R, PG-13, NC-17, G
   And I press "ratings_submit"
   Then I should be on the home page

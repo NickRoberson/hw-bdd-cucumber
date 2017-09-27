@@ -1,6 +1,6 @@
 # Add a declarative step here for populating the DB with movies.
 
-# PART 1 
+# -------------------------- PART 1 --------------------------
 
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
@@ -16,7 +16,7 @@ Then /(.*) seed movies should exist/ do | n_seeds |
   Movie.count.should be n_seeds.to_i
 end
 
-# PART 2 
+# -------------------------- PART 2 --------------------------
 
 When /I uncheck the following ratings: (.*)/ do |ratings|
   # for each rating, uncheck that rating
@@ -28,21 +28,23 @@ When /I check the following ratings: (.*)/ do |ratings|
   ratings.split(', ').each {|x| step %{I check "ratings_#{x}"}}
 end
 
+# GET ERROR HERE ON LAST LINE
 Then /I should see all of the movies/ do
   # get row count and movie count
   rows = page.all('#movies tr').size - 1
   movies = Movie.count()
   # print to verify 
-  puts rows 
-  puts movies
-  assert rows == movies
+  puts rows # prints 10 
+  puts movies # prints 10 
+  assert rows.should == movies
 end
 
-# PART 3 
+# -------------------------- PART 3 --------------------------
 
 # use regex to make sure that movies are sorted
+# GET ERROR HERE ON THIRD LINE 
 Then /I should see "(.*)" before "(.*)"/ do |movie1, movie2|
-  check = page.body.match(/.* #{movie2}/)
-  # make sure movie1 comes before movie2
-  assert check =~ /#{movie1}/ 
+  first = page.body.index(movie1) or return false
+  second = page.body.index(movie2, first) or return false
+  assert (first < second)
 end
